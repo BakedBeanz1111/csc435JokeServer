@@ -1,73 +1,24 @@
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 
-class Worker extends Thread {
-	Socket sock;
-	Worker (Socket s) { 
-		sock = s;
-	}
-	
-	public void run() {
-		PrintStream out = null;
-		BufferedReader in = null;
-		try {
-			in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-			out = new PrintStream(sock.getOutputStream());
-			try {
-				String name;
-				name = in.readLine();
-				System.out.println("Looking up " + name);
-				printRemoteAddress(name, out);
-			}
-			catch (IOException x) {
-				System.out.println("Server read error");
-				x.printStackTrace();
-			}
-			sock.close();
-		}
-		catch (IOException ioe) {
-			System.out.println(ioe);
-		}
-	}
-	
-	static void printRemoteAddress(String name, PrintStream out) {
-		try {
-			out.println("Looking up " + name + "...");
-			InetAddress machine = InetAddress.getByName(name);
-			out.println("Host name : " + machine.getHostName());
-			out.println("Host IP : " + toText(machine.getAddress()));
-		}
-		catch (UnknownHostException ex) {
-			out.println("Failed in attempt to look up " + name);
-		}
-	}
-	
-	static String toText(byte ip[]){
-		StringBuffer results = new StringBuffer();
-		for(int i = 0; i < ip.length; i++) {
-			if (i > 0)
-				results.append(".");
-			else
-				results.append(0xff & ip[i]);
-		}
-		return results.toString();
-	}
-}
+public class InetServer {
 
-public class JokeServer {
-	
-	public static void main(String [] args) throws IOException {
-		int q_len = 6;
-		int port = 1565;
-		Socket sock;
-		
-		ServerSocket servsock = new ServerSocket(port, q_len);
-		
-		System.out.println("Clark Elliot's Inet server 1.8 starting up, listening at port 1565.\n");
-		
-		while(true) {
-			sock = servsock.accept();
-			new Worker(sock).start();
-		}
-	}
+    public static void main(String a[]) throws IOException {
+
+        int q_len = 6; //Length of the queue
+        int port = 9001; //Port used to listen for incoming connections
+        Socket sock;
+
+        ServerSocket servsock = new ServerSocket(port, q_len);
+
+        System.out.println("Amad Ali's Inet server 1.8 starting up, listening at port 9001.\n");
+
+        //Main Loop to accept incoming connections to output to server screen
+        while (true) {
+
+            sock = servsock.accept();
+            new Worker(sock).start();
+        }
+    }
 }
