@@ -4,6 +4,11 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
+//Get joke from Server
+//The Steps to getting a joke
+//Step 1) Connect to Joke Server
+//Step 2) Get the Joke from the server
+//Step 3) Close connection to the server
 public class JokeClient {
 
     public static void main(String args[]) {
@@ -23,23 +28,21 @@ public class JokeClient {
         //Main Loop for command input
         try {
 
-            String command;
+            String name;
 
             do {
 
-                getJoke(serverName);
-
-                System.out.print("A joke should appear before and after this line: ");
+                System.out.print("Press anything and then enter, (quit) to end: ");
                 System.out.flush();
 
-                command = in.readLine();
+                name = in.readLine();
 
-                if(command.indexOf("quit") < 0)
+                if(name.indexOf("quit") < 0)
                     getJoke(serverName);
             }
 
             //If "quit" is typed, exit client application
-            while(command.indexOf("quit") < 0);
+            while(name.indexOf("quit") < 0);
             System.out.println("Cancelled by user request.");
 
         } catch (IOException x) {
@@ -48,6 +51,10 @@ public class JokeClient {
     }
 
     //Get joke from Server
+    //The Steps to getting a joke
+    //Step 1) Connect to Joke Server
+    //Step 2) Get the Joke from the server
+    //Step 3) Close connection to the server
     static void getJoke(String serverName){
 
         Socket sock;
@@ -55,20 +62,18 @@ public class JokeClient {
         PrintStream toServer;
         String textFromServer;
 
-        //Try/Catch loop to process thread between server and client
+        //Attempt to get a response from the server
         try {
 
+            //Step 1) Connect to Joke Server
             sock = new Socket(serverName, 9001);
             fromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
             toServer = new PrintStream(sock.getOutputStream());
 
-            for (int i = 1; i <= 3; i++) {
+            textFromServer = fromServer.readLine();
 
-                textFromServer = fromServer.readLine();
-
-                if (textFromServer != null)
-                    System.out.println(textFromServer);
-            }
+            if (textFromServer != null)
+                System.out.println(textFromServer);
 
             sock.close();
         } catch(IOException x) {
