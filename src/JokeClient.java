@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
-public class InetClient {
+public class JokeClient {
 
     public static void main(String args[]) {
 
@@ -15,7 +15,7 @@ public class InetClient {
         else
             serverName = args[0];
 
-        System.out.println("Amad Ali's Inet Client, 1.8.\n");
+        System.out.println("Amad Ali's Joke Client, 1.8.\n");
         System.out.println("Using server: " + serverName + ", Port: 9001");
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -23,45 +23,32 @@ public class InetClient {
         //Main Loop for command input
         try {
 
-            String name;
+            String command;
 
             do {
 
-                System.out.print("Enter a hostname or an IP address, (quit) to end: ");
+                getJoke(serverName);
+
+                System.out.print("A joke should appear before and after this line: ");
                 System.out.flush();
 
-                name = in.readLine();
+                command = in.readLine();
 
-                if(name.indexOf("quit") < 0)
-                    getRemoteAddress(name, serverName);
+                if(command.indexOf("quit") < 0)
+                    getJoke(serverName);
             }
 
             //If "quit" is typed, exit client application
-            while(name.indexOf("quit") < 0);
-                System.out.println("Cancelled by user request.");
+            while(command.indexOf("quit") < 0);
+            System.out.println("Cancelled by user request.");
 
         } catch (IOException x) {
             x.printStackTrace();
         }
     }
 
-    //Format IP address as string
-    static String toText(byte ip[]) {
-
-        StringBuffer result = new StringBuffer();
-
-        for(int i = 0; i<ip.length; i++) {
-
-            if(i>0)
-                result.append(".");
-            result.append(0xff & ip[i]);
-        }
-
-        return result.toString();
-    }
-
-    //Get remote address of queries website
-    static void getRemoteAddress(String name, String serverName){
+    //Get joke from Server
+    static void getJoke(String serverName){
 
         Socket sock;
         BufferedReader fromServer;
@@ -74,9 +61,6 @@ public class InetClient {
             sock = new Socket(serverName, 9001);
             fromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
             toServer = new PrintStream(sock.getOutputStream());
-
-            toServer.println(name);
-            toServer.flush();
 
             for (int i = 1; i <= 3; i++) {
 

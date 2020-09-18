@@ -22,8 +22,8 @@ class Worker extends Thread {
 
                 String name;
                 name = in.readLine();
-                System.out.println("Looking up " + name);
-                printRemoteAddress(name, out);
+                System.out.println("Sending joke to whoever typed: " + name);
+                printJoke(out);
             }
 
             //If it can't communicate, output the error
@@ -43,36 +43,8 @@ class Worker extends Thread {
         }
     }
 
-    static void printRemoteAddress(String name, PrintStream out){
+    static void printJoke(PrintStream out){
 
-        //If a sever exists on the query, output this formatted text
-        try{
-
-            out.println("Looking up " + name + "...");
-
-            InetAddress machine = InetAddress.getByName(name);
-
-            out.println("Host Name: " + machine.getHostName());
-            out.println("Host IP: " + toText(machine.getAddress()));
-        }
-        catch(UnknownHostException ex){
-
-            out.println("Failed in attempt to look up " + name);
-        }
-    }
-
-    //Format IP address as String
-    static String toText(byte ip[]) {
-
-        StringBuffer result = new StringBuffer();
-
-        for(int i = 0; i < ip.length; i++){
-
-            if(i>0)
-                result.append(".");
-            result.append(0xff & ip[i]);
-        }
-
-        return result.toString();
+        out.println("Two neutrons walk into a bar and order drinks! They ask for the tab, and the bar tender says 'no charge!'");
     }
 }
