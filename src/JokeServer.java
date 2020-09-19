@@ -5,16 +5,19 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+//Our worker class extends the java thread class to expand functionality
 class Worker extends Thread {
 
     Socket sock;
     String joke = "Joke #1";
 
+    //Default constructor for creating new worker object
     Worker(Socket s) {
 
         sock = s;
     }
 
+    //This function executes upon each new creation of worker
     public void run() {
 
         PrintStream out = null;
@@ -22,9 +25,12 @@ class Worker extends Thread {
 
         try {
 
+            //input from the socket connection
             in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            //Text output to send to client
             out = new PrintStream(sock.getOutputStream());
 
+            //Establishing connection loop
             try {
 
                 String name = in.readLine();
@@ -43,6 +49,7 @@ class Worker extends Thread {
         }
     }
 
+    //sendJoke takes the name of the client and sends them a joke!
     private void sendJoke(String name, PrintStream out) {
 
         try {
@@ -71,6 +78,7 @@ public class JokeServer {
 
         System.out.println("Amad Ali's Inet server 1.8 starting up, listening at port 9001.\n");
 
+        //Main loop of Server waiting to recieve input and doing work based on input
         while(true) {
 
             sock = servsocket.accept();

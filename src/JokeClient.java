@@ -11,6 +11,7 @@ public class JokeClient {
         String serverName;
         int port = 9001;
 
+        //When launching the client, if there is a command line argument, set that as the serverName
         if(args.length < 1)
             serverName = "localhost";
         else
@@ -21,6 +22,7 @@ public class JokeClient {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
+        //Main loop of user input
         try {
 
             System.out.println("Please enter anything! Type (quit) to exit: ");
@@ -43,6 +45,9 @@ public class JokeClient {
         }
     }
 
+    //getJoke takes the name of the client, the server name and the port
+    //Gets a joke from the server with the supplied connection info(name and port)
+    //And returns a joke!
     static void getJoke(String name, String serverName, int port) {
 
         Socket sock;
