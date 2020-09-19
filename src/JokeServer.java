@@ -76,9 +76,9 @@ public class JokeServer {
 
         ServerSocket servsocket = new ServerSocket(port, q_len);
 
-        System.out.println("Amad Ali's Inet server 1.8 starting up, listening at port 9001.\n");
+        System.out.println("Amad Ali's Joke server 1.8 starting up, listening at port 9001.\n");
 
-        //Main loop of Server waiting to recieve input and doing work based on input
+        //Main loop of Server waiting to receive input and doing work based on input
         while(true) {
 
             sock = servsocket.accept();

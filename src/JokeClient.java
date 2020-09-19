@@ -17,7 +17,7 @@ public class JokeClient {
         else
             serverName = args[0];
 
-        System.out.println("Amad Ali's Inet Client, 1.8.\n");
+        System.out.println("Amad Ali's Joke Client, 1.8.\n");
         System.out.println("Using server: " + serverName + ", Port: " + port);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
