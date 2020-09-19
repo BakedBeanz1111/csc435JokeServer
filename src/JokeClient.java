@@ -4,81 +4,70 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
-//Get joke from Server
-//The Steps to getting a joke
-//Step 1) Connect to Joke Server
-//Step 2) Get the Joke from the server
-//Step 3) Close connection to the server
 public class JokeClient {
 
     public static void main(String args[]) {
 
         String serverName;
+        int port = 9001;
 
         if(args.length < 1)
             serverName = "localhost";
         else
             serverName = args[0];
 
-        System.out.println("Amad Ali's Joke Client, 1.8.\n");
-        System.out.println("Using server: " + serverName + ", Port: 9001");
+        System.out.println("Amad Ali's Inet Client, 1.8.\n");
+        System.out.println("Using server: " + serverName + ", Port: " + port);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-        //Main Loop for command input
         try {
 
-            String name;
+            System.out.println("Please enter anything! Type (quit) to exit: ");
+            String name = in.readLine();
+            String cmd;
 
             do {
 
-                System.out.print("Press anything and then enter, (quit) to end: ");
                 System.out.flush();
 
-                name = in.readLine();
+                cmd = in.readLine();
 
-                if(name.indexOf("quit") < 0)
-                    getJoke(serverName);
+                getJoke(name, serverName, port);
             }
+            while (cmd.indexOf("quit") < 0);
 
-            //If "quit" is typed, exit client application
-            while(name.indexOf("quit") < 0);
-            System.out.println("Cancelled by user request.");
 
         } catch (IOException x) {
             x.printStackTrace();
         }
     }
 
-    //Get joke from Server
-    //The Steps to getting a joke
-    //Step 1) Connect to Joke Server
-    //Step 2) Get the Joke from the server
-    //Step 3) Close connection to the server
-    static void getJoke(String serverName){
+    static void getJoke(String name, String serverName, int port) {
 
         Socket sock;
         BufferedReader fromServer;
         PrintStream toServer;
         String textFromServer;
 
-        //Attempt to get a response from the server
         try {
 
-            //Step 1) Connect to Joke Server
-            sock = new Socket(serverName, 9001);
+            sock = new Socket(serverName, port);
+
             fromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
             toServer = new PrintStream(sock.getOutputStream());
 
-            textFromServer = fromServer.readLine();
+            toServer.println(name);
+            toServer.println(serverName);
+            toServer.println(port);
 
-            if (textFromServer != null)
-                System.out.println(textFromServer);
+            textFromServer =fromServer.readLine();
+
+            System.out.println(textFromServer);
 
             sock.close();
-        } catch(IOException x) {
 
-            System.out.println("Socket errors.");
+        } catch (IOException x) {
             x.printStackTrace();
         }
     }

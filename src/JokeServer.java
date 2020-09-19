@@ -5,98 +5,75 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-//Get joke from Server
-//The Steps to getting a joke
-//Step 1) Connect to Joke Server
-//Step 2) Get the Joke from the server
-//Step 3) Close connection to the server
 class Worker extends Thread {
 
     Socket sock;
+    String joke = "Joke #1";
 
-    //Worker Object
-    Worker (Socket s) {
+    Worker(Socket s) {
 
         sock = s;
     }
 
-    String joke = "Two neutrons walk into a bar and order drinks! They ask for the tab, and the bar tender says 'no charge!'";
-
-    //This method is for when the worker thread starts
     public void run() {
 
-        PrintStream out = null; //Output String starts as null
-        BufferedReader in = null; //Input String starts as nul
+        PrintStream out = null;
+        BufferedReader in = null;
 
         try {
 
-            in = new BufferedReader(new InputStreamReader(sock.getInputStream())); //Information from the socket connection
-            out = new PrintStream(sock.getOutputStream()); //Output Information from the socket connection
+            in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            out = new PrintStream(sock.getOutputStream());
+
             try {
 
-                String name;
+                String name = in.readLine();
 
-                //it freezes here
-                name = in.readLine();
+                sendJoke(name, out);
 
-                System.out.println("Sending joke to whoever typed: " + name);
-                printJoke(out);
-            }
-
-            //If it can't communicate, output the error
-            catch (IOException x) {
+            } catch (IOException x) {
 
                 System.out.println("Server read error");
                 x.printStackTrace();
             }
 
-            //Step 3) Close Connection From Server
-            sock.close();
-        }
-
-        //If it can't communicate, output the error
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
 
             System.out.println(ioe);
         }
     }
 
-    static void printJoke(PrintStream out){
-
-        String joke = "Two neutrons walk into a bar and order drinks! They ask for the tab, and the bar tender says 'no charge!'";
-        int i = 0;
-
-        out.println(joke);
+    private void sendJoke(String name, PrintStream out) {
 
         try {
 
-            while(i == 0) {
-                out.println(joke);
-                i++;
+            while (true) {
+
+                out.println("name: " + name + " " + "out: " + out + " " + "joke: " + joke);
             }
-        } catch (Exception e) {
-            e.getMessage();
+
+        } catch (Exception ex) {
+
+            out.println("Failed to send joke to " + name);
         }
     }
 }
 
 public class JokeServer {
 
-    public static void main(String a[]) throws IOException {
+    public static void main(String args[]) throws  IOException {
 
-        int q_len = 6; //Length of the queue
-        int port = 9001; //Port used to listen for incoming connections
+        int q_len = 6;
+        int port = 9001;
         Socket sock;
 
-        ServerSocket servsock = new ServerSocket(port, q_len);
+        ServerSocket servsocket = new ServerSocket(port, q_len);
 
-        System.out.println("Amad Ali's Joke server 1.8 starting up, listening at port 9001.\n");
+        System.out.println("Amad Ali's Inet server 1.8 starting up, listening at port 9001.\n");
 
-        //Main Loop to accept incoming connections to output to server screen
-        while (true) {
+        while(true) {
 
-            sock = servsock.accept();
-            System.out.println("I got something!");
+            sock = servsocket.accept();
             new Worker(sock).start();
         }
     }
