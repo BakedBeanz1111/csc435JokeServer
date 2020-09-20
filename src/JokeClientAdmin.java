@@ -21,7 +21,7 @@ public class JokeClientAdmin {
         else
             serverName = args[0];
 
-        System.out.println("Amad Ali's Joke Admin Client, 1.8.\n");
+        System.out.println("Amad Ali's Joke Admin Client! ");
         System.out.println("Using server: " + serverName + ", Port: " + port);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -65,7 +65,7 @@ public class JokeClientAdmin {
         }
     }
 
-    //changeMode takes the name, the servername, and the port and changes from Joke to Proverb/Proverb to Joke
+    //changeMode takes the current mode, the servername, and the port and changes from Joke to Proverb/Proverb to Joke
     private static void changeMode(String currentMode, String serverName, int port) {
 
         Socket sock;

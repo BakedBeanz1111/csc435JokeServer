@@ -10,6 +10,12 @@ class Worker extends Thread {
 
     Socket sock;
     String joke = "Joke #1";
+    String proverb = "Proverb #1";
+
+    //isJoke is the boolean value for confirming the mode between Joke and Proverb
+    //if isJoke is true, the server is in Joke mode, so display jokes
+    //if isJoke is false, the server is in proverb mode, so display proverbs
+    boolean isJoke = true;
 
     //Default constructor for creating new worker object
     Worker(Socket s) {
@@ -35,8 +41,15 @@ class Worker extends Thread {
 
                 String name = in.readLine();
 
-                sendJoke(name, out);
-                printServerMode(name, out);
+                System.out.println(name);
+
+                if (name.equals("Joke"))
+                    isJoke = true;
+                else if (name.equals("Proverb"))
+                    isJoke = false;
+
+                sendMessage(name, out);
+                //printServerMode(name, out);
 
             } catch (IOException x) {
 
@@ -50,15 +63,17 @@ class Worker extends Thread {
         }
     }
 
-    //sendJoke takes the name of the client and sends them a joke!
+    //sendMessage takes the name of the client and sends them a message!
     //Does not output to Server Console!!!
-    private void sendJoke(String name, PrintStream out) {
+    private void sendMessage(String name, PrintStream out) {
 
         try {
 
             while (true) {
-
-                out.println("name: " + name + " " + "out: " + out + " " + "joke: " + joke);
+                if(isJoke)
+                    out.println("name: " + name + " " + "out: " + out + " " + "message: " + joke);
+                else
+                    out.println("name: " + name + " " + "out: " + out + " " + "message: " + proverb);
             }
 
         } catch (Exception ex) {
@@ -68,6 +83,9 @@ class Worker extends Thread {
     }
 
     //printServerMode outputs
+    //If an Admin executes this command, the mode changes
+    //else do nothing
+    //Does not output to Server console!!!
     static void printServerMode(String name, PrintStream out){
 
         try {
@@ -93,7 +111,7 @@ public class JokeServer {
 
         ServerSocket servsocket = new ServerSocket(port, q_len);
 
-        System.out.println("Amad Ali's Joke server 1.8 starting up, listening at port 9001.\n");
+        System.out.println("Amad Ali's Joke server is starting up, listening at port 9001.\n");
 
         //Main loop of Server waiting to receive input and doing work based on input
         while(true) {
