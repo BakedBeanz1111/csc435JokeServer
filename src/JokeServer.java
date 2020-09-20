@@ -9,6 +9,7 @@ import java.net.Socket;
 class Worker extends Thread {
 
     Socket sock;
+    //Dummy joke and proverb just to get this working properly
     String joke = "Joke #1";
     String proverb = "Proverb #1";
 
@@ -43,10 +44,14 @@ class Worker extends Thread {
 
                 System.out.println(name);
 
-                if (name.equals("Joke"))
+                if (name.equals("Joke")) {
+
                     isJoke = true;
-                else if (name.equals("Proverb"))
+                }
+                else if (name.equals("Proverb")) {
+
                     isJoke = false;
+                }
 
                 sendMessage(name, out);
                 //printServerMode(name, out);
@@ -70,6 +75,7 @@ class Worker extends Thread {
         try {
 
             while (true) {
+
                 if(isJoke)
                     out.println("name: " + name + " " + "out: " + out + " " + "message: " + joke);
                 else

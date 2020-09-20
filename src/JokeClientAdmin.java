@@ -41,6 +41,7 @@ public class JokeClientAdmin {
 
                 cmd = in.readLine();
 
+                //Press enter on a blank input to change mode
                 if(cmd.equals("")) {
 
                     if(currentMode.equals("Joke")) {
