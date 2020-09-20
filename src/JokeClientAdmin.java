@@ -6,11 +6,7 @@ import java.net.Socket;
 
 public class JokeClientAdmin {
 
-    //if isJoke is true, mode is Joke Mode
-    //if isJoke is false, mode is Proverb Mode
-    static boolean isJoke = true;
-    //When isJoke is true, currentMode is Joke
-    //When isJoke is false, currentMode is Proverb
+    //Defaults as Joke
     static String currentMode = "Joke";
 
     public static void main(String args[]) {
@@ -36,6 +32,8 @@ public class JokeClientAdmin {
             String name = in.readLine();
             String cmd;
 
+            //With current implementation, just tapping enter switches mode on JokeClientAdmin
+            //Main loop for user input on admin console
             do {
 
                 System.out.flush();
@@ -46,19 +44,13 @@ public class JokeClientAdmin {
 
                     if(currentMode.equals("Joke")) {
 
-                        System.out.println("current mode was: " + currentMode);
                         currentMode = "Proverb";
-                        isJoke = false;
                         System.out.println("current mode is: " + currentMode);
-                        System.out.println("isJoke: " + isJoke);
                     }
                     else {
 
-                        System.out.println("current mode was: " + currentMode);
                         currentMode = "Joke";
-                        isJoke = true;
                         System.out.println("current mode is: " + currentMode);
-                        System.out.println("isJoke: " + isJoke);
                     }
                 }
 
@@ -79,11 +71,6 @@ public class JokeClientAdmin {
         BufferedReader fromServer;
         PrintStream toServer;
         String textFromServer;
-
-        if (isJoke)
-            currentMode = "Joke";
-        else
-            currentMode = "Proverb";
 
         try {
 
