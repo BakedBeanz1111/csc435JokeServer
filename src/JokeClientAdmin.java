@@ -8,6 +8,7 @@ public class JokeClientAdmin {
 
     //Defaults as Joke
     static String currentMode = "Joke";
+    static String name = "Admin";
 
     public static void main(String args[]) {
 

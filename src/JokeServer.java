@@ -36,6 +36,7 @@ class Worker extends Thread {
                 String name = in.readLine();
 
                 sendJoke(name, out);
+                printServerMode(name, out);
 
             } catch (IOException x) {
 
@@ -50,6 +51,7 @@ class Worker extends Thread {
     }
 
     //sendJoke takes the name of the client and sends them a joke!
+    //Does not output to Server Console!!!
     private void sendJoke(String name, PrintStream out) {
 
         try {
@@ -62,6 +64,21 @@ class Worker extends Thread {
         } catch (Exception ex) {
 
             out.println("Failed to send joke to " + name);
+        }
+    }
+
+    //printServerMode outputs
+    static void printServerMode(String name, PrintStream out){
+
+        try {
+
+            while (name.equals("Admin")) {
+
+                out.println(name + " changed the mode!");
+            }
+        } catch (Exception e) {
+
+            e.printStackTrace();
         }
     }
 }
