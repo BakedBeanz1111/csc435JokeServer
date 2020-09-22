@@ -9,6 +9,7 @@ import java.net.Socket;
 class Worker extends Thread {
 
     Socket sock;
+
     //Dummy joke and proverb just to get this working properly
     String joke = "Joke #1";
     String proverb = "Proverb #1";
@@ -16,7 +17,7 @@ class Worker extends Thread {
     //isJoke is the boolean value for confirming the mode between Joke and Proverb
     //if isJoke is true, the server is in Joke mode, so display jokes
     //if isJoke is false, the server is in proverb mode, so display proverbs
-    boolean isJoke = true;
+    static boolean isJoke;
 
     //Default constructor for creating new worker object
     Worker(Socket s) {
@@ -42,27 +43,28 @@ class Worker extends Thread {
 
                 String name = in.readLine();
 
-                System.out.println(name);
+                System.out.println("name is: " + name);
 
                 if (name.equals("Joke")) {
 
                     isJoke = true;
                 }
+
                 else if (name.equals("Proverb")) {
 
                     isJoke = false;
                 }
-
-                sendMessage(name, out);
+                System.out.println("isJoke is: " + isJoke);
+                sendMessage(name, out, isJoke);
                 //printServerMode(name, out);
-
-            } catch (IOException x) {
+            }
+            catch (IOException x) {
 
                 System.out.println("Server read error");
                 x.printStackTrace();
             }
-
-        } catch (IOException ioe) {
+        }
+        catch (IOException ioe) {
 
             System.out.println(ioe);
         }
@@ -70,12 +72,14 @@ class Worker extends Thread {
 
     //sendMessage takes the name of the client and sends them a message!
     //Does not output to Server Console!!!
-    private void sendMessage(String name, PrintStream out) {
+    //Does output to Client Console!!!
+    private void sendMessage(String name, PrintStream out, Boolean isJoke) {
 
         try {
 
             while (true) {
 
+                //isJoke is only being set to true!
                 if(isJoke)
                     out.println("name: " + name + " " + "out: " + out + " " + "message: " + joke);
                 else

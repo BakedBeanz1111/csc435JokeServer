@@ -13,7 +13,7 @@ public class JokeClientAdmin {
     public static void main(String args[]) {
 
         String serverName;
-        int port = 9001;
+        int port = 9001; // Change to final port for deliverable
 
         //When launching the client, if there is a command line argument, set that as the serverName
         if(args.length < 1)
@@ -47,21 +47,19 @@ public class JokeClientAdmin {
                     if(currentMode.equals("Joke")) {
 
                         currentMode = "Proverb";
-                        System.out.println("current mode is: " + currentMode);
                     }
                     else {
 
                         currentMode = "Joke";
-                        System.out.println("current mode is: " + currentMode);
+
                     }
                 }
-
+                System.out.println("current mode is: " + currentMode);
                 changeMode(currentMode, serverName, port);
             }
             while (cmd.indexOf("quit") < 0);
-
-
-        } catch (IOException x) {
+        }
+        catch (IOException x) {
             x.printStackTrace();
         }
     }
@@ -83,9 +81,14 @@ public class JokeClientAdmin {
             toServer.println(currentMode);
             toServer.flush();
 
-            sock.close();
+            textFromServer = fromServer.readLine();
 
-        } catch (IOException x) {
+            if(textFromServer != null)
+                System.out.println("textFromServer: " + textFromServer);
+
+            sock.close();
+        }
+        catch (IOException x) {
             x.printStackTrace();
         }
     }

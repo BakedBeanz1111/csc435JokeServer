@@ -17,7 +17,7 @@ public class JokeClient {
         else
             serverName = args[0];
 
-        System.out.println("Amad Ali's Joke Client, 1.8.\n");
+        System.out.println("Amad Ali's Joke Client.\n");
         System.out.println("Using server: " + serverName + ", Port: " + port);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -35,12 +35,11 @@ public class JokeClient {
 
                 cmd = in.readLine();
 
-                getJoke(name, serverName, port);
+                getMessage(name, serverName, port);
             }
             while (cmd.indexOf("quit") < 0);
-
-
-        } catch (IOException x) {
+        }
+        catch (IOException x) {
             x.printStackTrace();
         }
     }
@@ -48,7 +47,7 @@ public class JokeClient {
     //getJoke takes the name of the client, the server name and the port
     //Gets a joke from the server with the supplied connection info(name and port)
     //And returns a joke!
-    static void getJoke(String name, String serverName, int port) {
+    static void getMessage(String name, String serverName, int port) {
 
         Socket sock;
         BufferedReader fromServer;
@@ -71,8 +70,8 @@ public class JokeClient {
             System.out.println(textFromServer);
 
             sock.close();
-
-        } catch (IOException x) {
+        }
+        catch (IOException x) {
             x.printStackTrace();
         }
     }
