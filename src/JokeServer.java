@@ -17,7 +17,7 @@ class Worker extends Thread {
     //isJoke is the boolean value for confirming the mode between Joke and Proverb
     //if isJoke is true, the server is in Joke mode, so display jokes
     //if isJoke is false, the server is in proverb mode, so display proverbs
-    static boolean isJoke;
+    static boolean isJoke = true;
 
     //Default constructor for creating new worker object
     Worker(Socket s) {
@@ -43,8 +43,6 @@ class Worker extends Thread {
 
                 String name = in.readLine();
 
-                System.out.println("name is: " + name);
-
                 if (name.equals("Joke")) {
 
                     isJoke = true;
@@ -54,9 +52,8 @@ class Worker extends Thread {
 
                     isJoke = false;
                 }
-                System.out.println("isJoke is: " + isJoke);
                 sendMessage(name, out, isJoke);
-                //printServerMode(name, out);
+                printServerMode(name, out);
             }
             catch (IOException x) {
 
@@ -68,6 +65,8 @@ class Worker extends Thread {
 
             System.out.println(ioe);
         }
+
+        System.out.println("I did a thing");
     }
 
     //sendMessage takes the name of the client and sends them a message!
@@ -77,6 +76,8 @@ class Worker extends Thread {
 
         try {
 
+            System.out.println("Sending message to " + name + "...");
+
             while (true) {
 
                 //isJoke is only being set to true!
@@ -85,7 +86,6 @@ class Worker extends Thread {
                 else
                     out.println("name: " + name + " " + "out: " + out + " " + "message: " + proverb);
             }
-
         } catch (Exception ex) {
 
             out.println("Failed to send joke to " + name);
@@ -97,6 +97,9 @@ class Worker extends Thread {
     //else do nothing
     //Does not output to Server console!!!
     static void printServerMode(String name, PrintStream out){
+
+        //This doesn't execute ever
+        System.out.println("Server mode changed!");
 
         try {
 

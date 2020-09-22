@@ -11,3 +11,5 @@ start "Joke Client" cmd /c "Java JokeClient"
 
 echo "Starting Admin Client"
 start "Admin Client" cmd /c "Java JokeClientAdmin"
+
+start

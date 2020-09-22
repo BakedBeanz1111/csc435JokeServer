@@ -54,7 +54,6 @@ public class JokeClientAdmin {
 
                     }
                 }
-                System.out.println("current mode is: " + currentMode);
                 changeMode(currentMode, serverName, port);
             }
             while (cmd.indexOf("quit") < 0);
