@@ -11,8 +11,42 @@ class Worker extends Thread {
     Socket sock;
 
     //Dummy joke and proverb just to get this working properly
-    String joke = "Joke #1";
-    String proverb = "Proverb #1";
+
+    final int totalJokes = 3; //4 Jokes
+
+    static int jokeCount = 0;
+
+    final String[] jokePrefix = {
+            "JA",
+            "JB",
+            "JC",
+            "JD"
+    };
+
+    final String[] jokes = {
+            "Joke #1",
+            "Joke #2",
+            "Joke #3",
+            "Joke #4"
+    };
+
+    final int totalProverbs = 3; //4 Proverbs
+
+    static int proverbCount = 0;
+
+    final String[] proverbPrefix = {
+            "PA",
+            "PB",
+            "PC",
+            "PD"
+    };
+
+    final String[] proverbs = {
+            "Proverb #1",
+            "Proverb #2",
+            "Proverb #3",
+            "Proverb #4"
+    };
 
     //isJoke is the boolean value for confirming the mode between Joke and Proverb
     //if isJoke is true, the server is in Joke mode, so display jokes
@@ -81,14 +115,35 @@ class Worker extends Thread {
             while (true) {
 
                 //isJoke is only being set to true!
-                if(isJoke)
-                    out.println("name: " + name + " " + "out: " + out + " " + "message: " + joke);
-                else
-                    out.println("name: " + name + " " + "out: " + out + " " + "message: " + proverb);
-            }
-        } catch (Exception ex) {
+                if(isJoke) {
 
-            out.println("Failed to send joke to " + name);
+                    if(jokeCount < totalJokes) {
+
+                        out.println(name + " " + jokePrefix[jokeCount] + " " + jokes[jokeCount]);
+
+                        if(jokeCount == 4)
+                            jokeCount = 0;
+                    }
+
+                    jokeCount++;
+                }
+
+                else {
+
+                    if (proverbCount < totalProverbs) {
+
+                        out.println(name + " " + proverbPrefix[proverbCount] + " " + proverbs[proverbCount]);
+
+                        if (proverbCount == 4)
+                            proverbCount = 0;
+                    }
+                    proverbCount++;
+                }
+            }
+        }
+        catch (Exception ex) {
+
+            out.println("Failed to send message to " + name);
         }
     }
 
@@ -119,10 +174,10 @@ public class JokeServer {
     public static void main(String args[]) throws  IOException {
 
         int q_len = 6;
-        int port = 9001;
+        int port = 9001; //Change Port Number
         Socket sock;
 
-        ServerSocket servsocket = new ServerSocket(port, q_len);
+        ServerSocket servsocket = new ServerSocket(port, q_len); //fix variable name
 
         System.out.println("Amad Ali's Joke server is starting up, listening at port 9001.\n");
 
