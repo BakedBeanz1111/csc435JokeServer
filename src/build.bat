@@ -10,7 +10,13 @@ echo "Starting Server"
 start "Joke Server" cmd /c "Java JokeServer"
 
 echo "Starting Client"
-start "Joke Client" cmd /c "Java JokeClient"
+start "Joke Client 1" cmd /c "Java JokeClient"
+
+echo "Starting Client"
+start "Joke Client 2 cmd /c "Java JokeClient"
+
+echo "Starting Client"
+start "Joke Client 3" cmd /c "Java JokeClient"
 
 echo "Starting Admin Client"
 start "Admin Client" cmd /c "Java JokeClientAdmin"
