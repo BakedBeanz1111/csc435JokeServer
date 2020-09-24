@@ -11,12 +11,8 @@ class Worker extends Thread {
     Socket sock;
 
     //Dummy joke and proverb just to get this working properly
-
-    final int totalJokes = 3; //4 Jokes
-
-    static int jokeCount = 0;
-
     final String[] jokePrefix = {
+
             "JA",
             "JB",
             "JC",
@@ -24,17 +20,15 @@ class Worker extends Thread {
     };
 
     final String[] jokes = {
+
             "Joke #1",
             "Joke #2",
             "Joke #3",
             "Joke #4"
     };
 
-    final int totalProverbs = 3; //4 Proverbs
-
-    static int proverbCount = 0;
-
     final String[] proverbPrefix = {
+
             "PA",
             "PB",
             "PC",
@@ -42,6 +36,7 @@ class Worker extends Thread {
     };
 
     final String[] proverbs = {
+
             "Proverb #1",
             "Proverb #2",
             "Proverb #3",
@@ -76,18 +71,35 @@ class Worker extends Thread {
             try {
 
                 String name = in.readLine();
+                String jokes = in.readLine();
+                String proverbs = in.readLine();
 
-                if (name.equals("Joke")) {
+                System.out.println(jokes);
+                System.out.println(proverbs);
 
-                    isJoke = true;
+                if(name.equals("Joke") || name.equals("Proverb"))
+                    if(name.equals("Joke")) {
+
+                        isJoke = true;
+                        System.out.println("Joke Mode!");
+                    }
+                    else if(name.equals("Proverb")) {
+
+                        isJoke = false;
+                        System.out.println("Proverb Mode!");
+                    }
+                    else
+                        System.out.println("It shouldn't be able to get here!");
+
+                else {
+
+                    //This segment of code isn't incrementing from 0
+
+                    int jokeCounter = Integer.parseInt(jokes);
+                    int proverbCounter = Integer.parseInt(proverbs);
+
+                    sendMessage(name, out, isJoke, jokeCounter, proverbCounter);
                 }
-
-                else if (name.equals("Proverb")) {
-
-                    isJoke = false;
-                }
-                sendMessage(name, out, isJoke);
-                printServerMode(name, out);
             }
             catch (IOException x) {
 
@@ -99,72 +111,32 @@ class Worker extends Thread {
 
             System.out.println(ioe);
         }
-
-        System.out.println("I did a thing");
     }
 
     //sendMessage takes the name of the client and sends them a message!
     //Does not output to Server Console!!!
     //Does output to Client Console!!!
-    private void sendMessage(String name, PrintStream out, Boolean isJoke) {
+    private void sendMessage(String name, PrintStream out, Boolean isJoke, int jokeCounter, int proverbCounter) {
 
         try {
 
             System.out.println("Sending message to " + name + "...");
+            System.out.println("jokeCounter: " + jokeCounter);
+            System.out.println("proverbCounter: " + proverbCounter);
 
             while (true) {
 
-                //isJoke is only being set to true!
-                if(isJoke) {
-
-                    if(jokeCount < totalJokes) {
-
-                        out.println(name + " " + jokePrefix[jokeCount] + " " + jokes[jokeCount]);
-
-                        if(jokeCount == 4)
-                            jokeCount = 0;
-                    }
-
-                    jokeCount++;
-                }
-
-                else {
-
-                    if (proverbCount < totalProverbs) {
-
-                        out.println(name + " " + proverbPrefix[proverbCount] + " " + proverbs[proverbCount]);
-
-                        if (proverbCount == 4)
-                            proverbCount = 0;
-                    }
-                    proverbCount++;
-                }
+                //joke/proverbCount isn't incrementing after executing
+                if(isJoke)
+                    out.println(name + " " + jokePrefix[jokeCounter] + " " + jokes[jokeCounter]);
+                else
+                    out.println(name + " " + proverbPrefix[proverbCounter] + " " + proverbs[proverbCounter]);
             }
         }
         catch (Exception ex) {
 
             out.println("Failed to send message to " + name);
-        }
-    }
-
-    //printServerMode outputs
-    //If an Admin executes this command, the mode changes
-    //else do nothing
-    //Does not output to Server console!!!
-    static void printServerMode(String name, PrintStream out){
-
-        //This doesn't execute ever
-        System.out.println("Server mode changed!");
-
-        try {
-
-            while (name.equals("Admin")) {
-
-                out.println(name + " changed the mode!");
-            }
-        } catch (Exception e) {
-
-            e.printStackTrace();
+            ex.printStackTrace();
         }
     }
 }

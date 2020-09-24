@@ -6,6 +6,11 @@ import java.net.Socket;
 
 public class JokeClient {
 
+    //Global Variables for the client to keep track of the messages its received
+    //I understand that global variables are bad programming practices but I see no simple solution to this problem
+    static int jokeCounter = 0;
+    static int proverbCounter = 0;
+
     public static void main(String args[]) {
 
         String serverName;
@@ -35,7 +40,7 @@ public class JokeClient {
 
                 cmd = in.readLine();
 
-                getMessage(name, serverName, port);
+                getMessage(name, serverName, port, jokeCounter, proverbCounter);
             }
             while (cmd.indexOf("quit") < 0);
         }
@@ -46,8 +51,8 @@ public class JokeClient {
 
     //getJoke takes the name of the client, the server name and the port
     //Gets a joke from the server with the supplied connection info(name and port)
-    //And returns a joke!
-    static void getMessage(String name, String serverName, int port) {
+    //And returns a message!
+    static void getMessage(String name, String serverName, int port, int jokes, int proverbs) {
 
         Socket sock;
         BufferedReader fromServer;
@@ -62,10 +67,36 @@ public class JokeClient {
             toServer = new PrintStream(sock.getOutputStream());
 
             toServer.println(name);
-            toServer.println(serverName);
-            toServer.println(port);
+            toServer.println(jokes);
+            toServer.println(proverbs);
+            toServer.flush();
 
-            textFromServer =fromServer.readLine();
+            textFromServer = fromServer.readLine();
+            System.out.println("textFromServer: " + textFromServer);
+
+            if(textFromServer.contains("J")) {
+                if (jokeCounter == 3) {
+                    jokeCounter = 0;
+                    System.out.println("Joke Counter Reset!");
+                } else {
+
+                    jokeCounter++;
+                    System.out.println("Joke incremented!");
+                }
+            }
+            else if(textFromServer.contains("P")) {
+                    if (proverbCounter == 3) {
+
+                        proverbCounter = 0;
+                        System.out.println("Proverb Counter Reset!");
+                    } else {
+
+                        proverbCounter++;
+                        System.out.println("Proverb incremented!");
+                    }
+            }
+            else
+                System.out.println("I'm not incrementing shit!");
 
             System.out.println(textFromServer);
 

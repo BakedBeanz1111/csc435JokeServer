@@ -1,5 +1,8 @@
 echo "Simple build and launch script"
 
+echo "Clean Build Environment"
+rm *.class
+
 echo "Building src code"
 javac *.java
 

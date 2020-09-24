@@ -8,7 +8,6 @@ public class JokeClientAdmin {
 
     //Defaults as Joke
     static String currentMode = "Joke";
-    static String name = "Admin";
 
     public static void main(String args[]) {
 
@@ -79,11 +78,6 @@ public class JokeClientAdmin {
 
             toServer.println(currentMode);
             toServer.flush();
-
-            textFromServer = fromServer.readLine();
-
-            if(textFromServer != null)
-                System.out.println("textFromServer: " + textFromServer);
 
             sock.close();
         }
