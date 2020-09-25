@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 //Our worker class extends the java thread class to expand functionality
 class Worker extends Thread {
@@ -22,7 +24,7 @@ class Worker extends Thread {
             "JD"
     };
 
-    final String[] jokes = {
+    static String[] jokes = {
 
             "Joke #1",
             "Joke #2",
@@ -38,7 +40,7 @@ class Worker extends Thread {
             "PD"
     };
 
-    final String[] proverbs = {
+    static String[] proverbs = {
 
             "Proverb #1",
             "Proverb #2",
@@ -127,12 +129,15 @@ class Worker extends Thread {
 
             while (true) {
 
-                //joke/proverbCount isn't incrementing after executing
                 if(isJoke) {
 
                     out.println(name + " " + jokePrefix[jokeCounter] + " " + jokes[jokeCounter]);
-                    if(jokeCounter == 3)
+
+                    if(jokeCounter == 3) {
+
                         shuffleArray(jokes);
+                        //System.out.println(jokes[jokeCounter]);
+                    }
                 }
                 else {
 
@@ -152,21 +157,31 @@ class Worker extends Thread {
     //Re-Randomize the message for each client conversation at the start of the 4 message cycle
     //Input: Take one of the arrays I declared previously
     //Outputs: Shuffles the array
-    //Method was taken from here: https://www.journaldev.com/32661/shuffle-array-java
-    //I googled "Java shuffle array"
+    //Method was taken from here: https://stackoverflow.com/questions/1519736/random-shuffling-of-an-array
+    //I googled "Java shuffle array of strings"
     public static void shuffleArray(String[] stringArray) {
 
-        //The way I understand how this works are as follows:
-        //1) Clone the array of Strings into a list of Strings
-        //2) Shuffle the order of the list
-        //3) Reapply the new order of the list back into the array
+        //I've attempted this two different ways and in both cases I lose string entries until I'm only returning one message over and over
 
-        List<String> stringList = Arrays.asList(stringArray);
-        Collections.shuffle(stringList);
-        stringList.toArray(stringArray);
+        Random rnd = ThreadLocalRandom.current();
+
+        for(int i = stringArray.length - 1; i > 0; i--) {
+
+            int index = rnd.nextInt(i + 1);
+
+            //simple swap
+            String a = stringArray[index];
+            stringArray[index] = stringArray[i];
+            stringArray[i] = a;
+        }
+
+        //https://www.journaldev.com/32661/shuffle-array-java
+        //List<String> stringList = Arrays.asList(stringArray);
+        //Collections.shuffle(stringList);
+        //stringArray = stringList.toArray(new String[stringList.size()]);
 
         //Debug output
-        System.out.println(Arrays.toString(stringArray));
+        //System.out.println(Arrays.toString(stringArray));
 
     }
 }
@@ -179,14 +194,14 @@ public class JokeServer {
         int port = 9001; //Change Port Number
         Socket sock;
 
-        ServerSocket servsocket = new ServerSocket(port, q_len); //fix variable name
+        ServerSocket servSocket = new ServerSocket(port, q_len);
 
         System.out.println("Amad Ali's Joke server is starting up, listening at port 9001.\n");
 
         //Main loop of Server waiting to receive input and doing work based on input
         while(true) {
 
-            sock = servsocket.accept();
+            sock = servSocket.accept();
             new Worker(sock).start();
         }
     }
