@@ -4,6 +4,9 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 //Our worker class extends the java thread class to expand functionality
 class Worker extends Thread {
@@ -93,8 +96,6 @@ class Worker extends Thread {
 
                 else {
 
-                    //This segment of code isn't incrementing from 0
-
                     int jokeCounter = Integer.parseInt(jokes);
                     int proverbCounter = Integer.parseInt(proverbs);
 
@@ -127,10 +128,18 @@ class Worker extends Thread {
             while (true) {
 
                 //joke/proverbCount isn't incrementing after executing
-                if(isJoke)
+                if(isJoke) {
+
                     out.println(name + " " + jokePrefix[jokeCounter] + " " + jokes[jokeCounter]);
-                else
+                    if(jokeCounter == 3)
+                        shuffleArray(jokes);
+                }
+                else {
+
                     out.println(name + " " + proverbPrefix[proverbCounter] + " " + proverbs[proverbCounter]);
+                    if(proverbCounter == 3)
+                        shuffleArray(proverbs);
+                }
             }
         }
         catch (Exception ex) {
@@ -138,6 +147,27 @@ class Worker extends Thread {
             out.println("Failed to send message to " + name);
             ex.printStackTrace();
         }
+    }
+
+    //Re-Randomize the message for each client conversation at the start of the 4 message cycle
+    //Input: Take one of the arrays I declared previously
+    //Outputs: Shuffles the array
+    //Method was taken from here: https://www.journaldev.com/32661/shuffle-array-java
+    //I googled "Java shuffle array"
+    public static void shuffleArray(String[] stringArray) {
+
+        //The way I understand how this works are as follows:
+        //1) Clone the array of Strings into a list of Strings
+        //2) Shuffle the order of the list
+        //3) Reapply the new order of the list back into the array
+
+        List<String> stringList = Arrays.asList(stringArray);
+        Collections.shuffle(stringList);
+        stringList.toArray(stringArray);
+
+        //Debug output
+        System.out.println(Arrays.toString(stringArray));
+
     }
 }
 

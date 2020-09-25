@@ -14,7 +14,7 @@ public class JokeClient {
     public static void main(String args[]) {
 
         String serverName;
-        int port = 9001;
+        int port = 9001; //Change Port to production port number from Deliverables document
 
         //When launching the client, if there is a command line argument, set that as the serverName
         if(args.length < 1)
@@ -74,7 +74,7 @@ public class JokeClient {
             textFromServer = fromServer.readLine();
             System.out.println("textFromServer: " + textFromServer);
 
-            if(textFromServer.contains("J")) {
+            if(textFromServer.contains("Joke")) {
                 if (jokeCounter == 3) {
                     jokeCounter = 0;
                     System.out.println("Joke Counter Reset!");
@@ -84,7 +84,7 @@ public class JokeClient {
                     System.out.println("Joke incremented!");
                 }
             }
-            else if(textFromServer.contains("P")) {
+            else if(textFromServer.contains("Proverb")) {
                     if (proverbCounter == 3) {
 
                         proverbCounter = 0;
