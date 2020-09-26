@@ -185,12 +185,28 @@ public class JokeServer {
     public static void main(String args[]) throws  IOException {
 
         int q_len = 6;
-        int port = 9001; //Change Port Number
+        int primaryPort = 9001; //Change Port Number
+        int secondaryPort;
         Socket sock;
 
-        ServerSocket serverSocket = new ServerSocket(port, q_len);
+        ServerSocket serverSocket;
 
         System.out.println("Amad Ali's Joke server is starting up, listening at port 9001.\n"); //Change Port Number
+
+        //If there is a commandLine argument, set the port to that commandLine argument
+        //EX: Launch JokeServer on primaryPort
+        //EX: Java JokeServer
+        //EX:
+        //EX: Launch JokeServer on secondaryPort
+        //EX: Java JokeServer 9002
+        //!!: Will fail if non integer is provided
+        //!!: To fix, add input validation on command line argument to check for Integer value
+        if(args.length == 1){
+            secondaryPort = Integer.parseInt(args[1]);
+            serverSocket = new ServerSocket(secondaryPort , q_len);
+        }
+        else
+            serverSocket = new ServerSocket(primaryPort, q_len);
 
         //Main loop of Server waiting to receive input and doing work based on input
         while(true) {
