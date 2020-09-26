@@ -1,0 +1,85 @@
+Amad Ali's Joke Client.
+
+Using server: localhost, Port: 9001
+Please enter anything to identify as! Type (quit) to exit:
+Amad
+
+textFromServer: Amad JA Joke #1
+Joke incremented!
+Amad JA Joke #1
+
+textFromServer: Amad JB Joke #2
+Joke incremented!
+Amad JB Joke #2
+
+textFromServer: Amad JC Joke #3
+Joke incremented!
+Amad JC Joke #3
+
+textFromServer: Amad JD Joke #4
+Joke Cycle Complete!
+Joke Counter Reset!
+Amad JD Joke #4
+
+**
+** Enter was pressed twice to change to ProverbMode on JokeClientAdmin
+**
+
+textFromServer: Amad PA Proverb #1
+Proverb incremented!
+Amad PA Proverb #1
+
+textFromServer: Amad PB Proverb #2
+Proverb incremented!
+Amad PB Proverb #2
+
+textFromServer: Amad PC Proverb #3
+Proverb incremented!
+Amad PC Proverb #3
+
+textFromServer: Amad PD Proverb #4
+Proverb Cycle Complete!
+Proverb Counter Reset!
+Amad PD Proverb #4
+
+**
+** This is where shuffleArray method starts wreaking havoc on the messages from the server
+**
+
+textFromServer: Amad PA Proverb #4
+Proverb incremented!
+Amad PA Proverb #4
+
+textFromServer: Amad PB Proverb #1
+Proverb incremented!
+Amad PB Proverb #1
+
+textFromServer: Amad PC Proverb #3
+Proverb incremented!
+Amad PC Proverb #3
+
+textFromServer: Amad PD Proverb #3
+Proverb Cycle Complete!
+Proverb Counter Reset!
+Amad PD Proverb #3
+
+**
+** Enter was pressed to change to JokeMode on JokeClientAdmin
+**
+
+textFromServer: Amad JA Joke #2
+Joke incremented!
+Amad JA Joke #2
+
+textFromServer: Amad JB Joke #1
+Joke incremented!
+Amad JB Joke #1
+
+textFromServer: Amad JC Joke #1
+Joke incremented!
+Amad JC Joke #1
+
+textFromServer: Amad JD Joke #1
+Joke Cycle Complete!
+Joke Counter Reset!
+Amad JD Joke #1
