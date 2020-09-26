@@ -77,9 +77,6 @@ class Worker extends Thread {
                 String jokes = in.readLine();
                 String proverbs = in.readLine();
 
-                System.out.println(jokes);
-                System.out.println(proverbs);
-
                 if(name.equals("Joke") || name.equals("Proverb"))
                     if(name.equals("Joke")) {
 
@@ -127,14 +124,20 @@ class Worker extends Thread {
 
                     out.println(name + " " + jokePrefix[jokeCounter] + " " + jokes[jokeCounter]);
 
-                    if(jokeCounter == 3)
+                    if(jokeCounter == 3) {
+
+                        //System.out.println("Shuffling Jokes!");
                         shuffleArray(jokes);
+                    }
                 }
                 else {
 
                     out.println(name + " " + proverbPrefix[proverbCounter] + " " + proverbs[proverbCounter]);
-                    if(proverbCounter == 3)
+                    if(proverbCounter == 3) {
+
+                        //System.out.println("Shuffling Proverbs!");
                         shuffleArray(proverbs);
+                    }
                 }
             }
         }

@@ -14,13 +14,20 @@ public class JokeClient {
     public static void main(String args[]) {
 
         String serverName;
-        int port = 9001; //Change Port to production port number from Deliverables document
+        int port; //Change Port to production port number from Deliverables document
 
-        //When launching the client, if there is a command line argument, set that as the serverName
-        if(args.length < 1)
+        //When launching the client, if there is a command line argument, set that as the serverName, next command line argument is port
+        if(args.length >= 1) {
+
+            //When starting the client, if it has command line arguments, the 1st argument is the serverName, the 2nd argument is the port
+            serverName = args[1];
+            port = Integer.parseInt(args[2]);
+        }
+        else {
+
             serverName = "localhost";
-        else
-            serverName = args[0];
+            port = 9001;
+        }
 
         System.out.println("Amad Ali's Joke Client.\n");
         System.out.println("Using server: " + serverName + ", Port: " + port);
@@ -81,6 +88,8 @@ public class JokeClient {
 
             if(textFromServer.contains("Joke")) {
                 if (jokeCounter == 3) {
+
+                    System.out.println("Joke Cycle Complete!");
                     jokeCounter = 0;
                     System.out.println("Joke Counter Reset!");
                 } else {
@@ -92,6 +101,7 @@ public class JokeClient {
             else if(textFromServer.contains("Proverb")) {
                     if (proverbCounter == 3) {
 
+                        System.out.println("Proverb Cycle Complete!");
                         proverbCounter = 0;
                         System.out.println("Proverb Counter Reset!");
                     } else {
@@ -101,7 +111,7 @@ public class JokeClient {
                     }
             }
             else
-                System.out.println("I'm not incrementing shit!");
+                System.out.println("I'm not incrementing anything!");
 
             System.out.println(textFromServer);
 
