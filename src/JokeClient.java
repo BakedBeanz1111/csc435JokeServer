@@ -20,7 +20,8 @@ public class JokeClient {
         if(args.length >= 1) {
 
             //When starting the client, if it has command line arguments, the 1st argument is the serverName, the 2nd argument is the port
-            serverName = args[1];
+            //Still needs input validation
+            serverName = args[1];//Has not been tested with hosting server on different machine
             port = Integer.parseInt(args[2]);
         }
         else {
