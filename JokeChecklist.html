@@ -70,7 +70,7 @@ Yes                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Included the correct headers for source files    </b></td><td align="left"><b>
-No                    </b></td></tr>
+Yes                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Followed TII submission link to run plagiarism checker </b></td><td align="left"><b>
@@ -93,7 +93,7 @@ Yes          </b></td></tr>
 
 <tr> <td align="left"><b>
 Maintains state so that all jokes/proverbs are seen before any are repeated. </b></td><td align="left"><b>
-No                    </b></td></tr>
+Yes                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Removed all Elliott's comments and added my own extensive comments to JokeServer    </b></td><td align="left"><b>
@@ -102,19 +102,19 @@ Yes                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Tested with this many clients simultaneously (more than one!)  </b></td><td align="left"><b>
-0                    </b></td></tr>
+2 Clients                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Returns four jokes and four proverbs   </b></td><td align="left"><b>
-No                    </b></td></tr>
+Yes                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Jokes and Proverbs re-randomized after each cycle </b></td><td align="left"><b>
-No                    </b></td></tr>
+Sorta - They will execute in order once, but my shuffle method removes jokes/proverbs</b></td></tr>
 
 <tr> <td align="left"><b>
 Labels the jokes and proverbs JA, JB, PC, PD, etc.    </b></td><td align="left"><b>
-No                    </b></td></tr>
+Yes                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Performs user name substitution into joke templates </b></td><td align="left"><b>
@@ -126,17 +126,17 @@ No                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Admin client switches server mode from Joke Mode to Proverb Mode    </b></td><td align="left"><b>
-No                    </b></td></tr>
+Yes                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Maintains client conversations without interference from other clients    </b></td><td align="left"><b>
 
-No                    </b></td></tr>
+Yes?                    </b></td></tr>
 
 
 <tr> <td align="left"><b>
 Correctly maintains converstations with interleaved Joke/Proverb modes  </b></td><td align="left"><b>
-No                    </b></td></tr>
+Sorta, until my shuffle method runs                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Only have to type user name once on JokeClient  </b></td><td align="left"><b>
@@ -144,15 +144,15 @@ Yes                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Can start JokeServer[s], JokeClient, and JokeClientAdmin in any order </b></td><td align="left"><b>
-No                    </b></td></tr>
+Yes                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Can start and stop JokeClientAdmin at any time </b></td><td align="left"><b>
-No                    </b></td></tr>
+Yes                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Can run JokeServer and JokeClient without JokeClientAdmin </b></td><td align="left"><b>
-No                    </b></td></tr>
+Yes                    </b></td></tr>
 
 <tr> <td align="left"><b>
 <center> MULTIPLE JOKESERVERS (Ten percent of grade) </center> </b></td><td align="left"><b>
@@ -169,7 +169,7 @@ No                    </b></td></tr>
 <tr> <td align="left"><b>
 Multiple interleaved joke/proverb conversations on interleaved servers are
 maintained correctly  </b></td><td align="left"><b>
-No                    </b></td></tr>
+Yes, until the shuffle method is called                    </b></td></tr>
 
 <tr> <td align="left"><b>
 Informs user of current server after switch </b></td><td align="left"><b>
@@ -208,14 +208,17 @@ No                    </b></td></tr>
 
 <tr> <td align="left"><b>
 [Fill in custom extra features, one line per feature]    </b></td><td align="left"><b>
-Yes                    </b></td></tr>
+No                    </b></td></tr>
 
 </table>
 
 <h2> Optional Comments: </h2>
 
 [Communicate with us about this program here if necessary.]<br><br>
-Explain <i> Maybe </i> entries here also.
+
+    I noticed a strange behavior with the two ways I tried to implement the shuffle an array of strings.
+    In both cases, I would lose entries of my array til only one message would persist. This happens on both
+    jokes and proverbs.
 
 
 </body></html>

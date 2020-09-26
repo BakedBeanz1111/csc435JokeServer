@@ -13,4 +13,4 @@ echo "Starting Client"
 start "Joke Client 1" cmd /c "Java JokeClient"
 
 echo "Starting Admin Client"
-start "Admin Client" cmd /c "Java JokeClientAdmin"
+start "Admin Client" cmd /c "Java JokeClient"

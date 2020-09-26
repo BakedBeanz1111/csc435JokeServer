@@ -4,9 +4,6 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -75,6 +72,7 @@ class Worker extends Thread {
             //Establishing connection loop
             try {
 
+                //Reading in data from server
                 String name = in.readLine();
                 String jokes = in.readLine();
                 String proverbs = in.readLine();
@@ -123,21 +121,14 @@ class Worker extends Thread {
 
         try {
 
-            System.out.println("Sending message to " + name + "...");
-            System.out.println("jokeCounter: " + jokeCounter);
-            System.out.println("proverbCounter: " + proverbCounter);
-
             while (true) {
 
                 if(isJoke) {
 
                     out.println(name + " " + jokePrefix[jokeCounter] + " " + jokes[jokeCounter]);
 
-                    if(jokeCounter == 3) {
-
+                    if(jokeCounter == 3)
                         shuffleArray(jokes);
-                        //System.out.println(jokes[jokeCounter]);
-                    }
                 }
                 else {
 
@@ -175,6 +166,9 @@ class Worker extends Thread {
             stringArray[i] = a;
         }
 
+        //The results of the code below is identical to the code above
+        //It shouldn't be called shuffleArray, it should be called keepExecutingTilOnlyOneStringRemains
+
         //https://www.journaldev.com/32661/shuffle-array-java
         //List<String> stringList = Arrays.asList(stringArray);
         //Collections.shuffle(stringList);
@@ -194,14 +188,14 @@ public class JokeServer {
         int port = 9001; //Change Port Number
         Socket sock;
 
-        ServerSocket servSocket = new ServerSocket(port, q_len);
+        ServerSocket serverSocket = new ServerSocket(port, q_len);
 
-        System.out.println("Amad Ali's Joke server is starting up, listening at port 9001.\n");
+        System.out.println("Amad Ali's Joke server is starting up, listening at port 9001.\n"); //Change Port Number
 
         //Main loop of Server waiting to receive input and doing work based on input
         while(true) {
 
-            sock = servSocket.accept();
+            sock = serverSocket.accept();
             new Worker(sock).start();
         }
     }

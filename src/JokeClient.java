@@ -30,7 +30,7 @@ public class JokeClient {
         //Main loop of user input
         try {
 
-            System.out.println("Please enter anything! Type (quit) to exit: ");
+            System.out.println("Please enter anything to identify as! Type (quit) to exit: ");
             String name = in.readLine();
             String cmd;
 
@@ -63,8 +63,13 @@ public class JokeClient {
 
             sock = new Socket(serverName, port);
 
-            fromServer = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-            toServer = new PrintStream(sock.getOutputStream());
+            fromServer = new BufferedReader(new InputStreamReader(sock.getInputStream())); //receiving data from server
+            toServer = new PrintStream(sock.getOutputStream()); //Sending data to server
+
+            //Current Format of Message to Server
+            //Name
+            //jokeCounter
+            //proverbCounter
 
             toServer.println(name);
             toServer.println(jokes);
