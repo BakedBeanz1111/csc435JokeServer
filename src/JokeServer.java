@@ -205,6 +205,7 @@ public class JokeServer {
         //!!: Will fail if non integer is provided
         //!!: To fix, add input validation on command line argument to check for Integer value
         if(args.length == 1){
+
             secondaryPort = Integer.parseInt(args[1]);
             serverSocket = new ServerSocket(secondaryPort , q_len);
         }
